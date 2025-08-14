@@ -11,15 +11,14 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 model.eval()
 
-# Sadece int (0 ya da 1) döner
 def predict_new(text: str) -> int:
     inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512)
-    inputs = {k: v.to(device) for k, v in inputs.items()} #her tensörü belirtilen cihaza taşır (gpu/cpu)
-
+    inputs = {k: v.to(device) for k, v in inputs.items()}
     with torch.no_grad():
         outputs = model(**inputs)
         logits = outputs.logits
         predicted_class = torch.argmax(logits, dim=1).item()
 
-    return predicted_class  # 0 = gerçek, 1 = sahte
+    return predicted_class  
+
 
