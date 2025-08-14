@@ -6,7 +6,6 @@ from app.db import get_session
 
 router = APIRouter()
 
-# 0/1 değerini açıklayan sözlük
 label_map = {
     0: "gerçek",
     1: "sahte"
@@ -17,14 +16,15 @@ def predict(payload: PredictionInput, session: Session = Depends(get_session)):
     if not payload.news:
         raise HTTPException(status_code=400, detail="Prediction input is required.")
     try:
-        prediction = predict_new(payload.news)  # bu int: 0 veya 1
-        entry = News(news=payload.news, result=prediction)  # int olarak DB'ye gider
+        prediction = predict_new(payload.news) 
+        entry = News(news=payload.news, result=prediction)  
         session.add(entry)
         session.commit()
-        return {"result": label_map.get(prediction, "bilinmiyor")}  # kullanıcıya string döner
+        return {"result": label_map.get(prediction, "bilinmiyor")} 
     except Exception as e:
         raise HTTPException(
             status_code=500,
             detail=f"Prediction failed: {str(e)}"
         )
+
 
