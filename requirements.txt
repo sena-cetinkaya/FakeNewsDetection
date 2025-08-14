@@ -1,0 +1,15 @@
+sqlmodel~=0.0.24
+fastapi~=0.116.1
+keras~=3.10.0
+pandas~=2.3.1
+tensorflow~=2.19.0
+uvicorn
+python-dotenv
+python-multipart
+psycopg2-binary
+pytest
+pydantic
+scikit-learn
+httpx
+transformers
+torch
